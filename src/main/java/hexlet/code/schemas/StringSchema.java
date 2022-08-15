@@ -1,40 +1,28 @@
 package hexlet.code.schemas;
 
-import hexlet.code.schemas.states.State;
 import lombok.ToString;
 
 import java.util.Objects;
 
+
 @ToString
-public final class StringSchema implements Schema {
-
-    private State state;
-
-    public StringSchema() {
-        this.state = new State(this);
-    }
+public final class StringSchema extends BaseSchema {
 
     @Override
     public boolean isValid(Object value) {
-        boolean result = true;
-
-        if (this.state.isRequired() && Objects.isNull(value)) {
-            return false;
-        }
+        boolean result = super.checkRequiredValidity(value, obj ->
+                obj instanceof String && (!Objects.toString(obj).isEmpty()));
 
         String strValue = value != null ? Objects.toString(value) : "";
-        if (this.state.isRequired() && strValue.isEmpty()) {
-            return false;
-        }
 
-        if (this.state.isMinLengthChecked()) {
-            if (strValue.length() < this.state.getMinLength()) {
+        if (super.getState().isMinLengthChecked()) {
+            if (strValue.length() < super.getState().getMinLength()) {
                 return false;
             }
         }
 
-        if (this.state.isStrContainsChecked()) {
-            if (!strValue.contains(this.state.getContainedStr())) {
+        if (super.getState().isStrContainsChecked()) {
+            if (!strValue.contains(super.getState().getContainedStr())) {
                 return false;
             }
         }
@@ -44,32 +32,16 @@ public final class StringSchema implements Schema {
 
     @Override
     public Schema contains(String value) {
-        this.state.setContainedStr(value);
-        this.state.setStrContainsChecked(true);
-        return this;
-    }
-
-    @Override
-    public Schema required() {
-        this.state.setRequired(true);
-        return this;
-    }
-
-    @Override
-    public Schema notRequired() {
-        this.state.setRequired(false);
+        super.getState().setContainedStr(value);
+        super.getState().setStrContainsChecked(true);
         return this;
     }
 
     @Override
     public Schema minLength(int mLength) {
-        this.state.setMinLength(mLength);
-        this.state.setMinLengthChecked(true);
+        super.getState().setMinLength(mLength);
+        super.getState().setMinLengthChecked(true);
         return this;
     }
 
-    @Override
-    public void setState(State schemaState) {
-        this.state = schemaState;
-    }
 }
