@@ -42,6 +42,15 @@ public class State {
     @Setter
     private int maxValue = 0;
 //*****
+//*** Map
+    @Getter
+    @Setter
+    private int size = 0;
+
+    @Getter
+    @Setter
+    private boolean sizeChecked = false;
+//*****
     @Getter
     @Setter
     private boolean required = false;

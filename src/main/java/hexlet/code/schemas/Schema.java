@@ -20,5 +20,9 @@ public interface Schema {
         return this;
     }
 
+    default Schema sizeof(int size) {
+        return  this;
+    }
+
     void setState(State state);
 }
