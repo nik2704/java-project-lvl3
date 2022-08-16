@@ -38,7 +38,7 @@ public abstract class BaseSchema implements Schema {
     }
 
     @Override
-    public final Schema notRequired() {
+    public final BaseSchema notRequired() {
         this.state.setRequired(false);
         return this;
     }

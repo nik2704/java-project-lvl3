@@ -8,7 +8,7 @@ public final class MapSchema extends BaseSchema {
     private boolean shapeChecked = false;
 
     @Override
-    public Schema shape(Map<String, BaseSchema> schemas) {
+    public BaseSchema shape(Map<String, BaseSchema> schemas) {
         this.schemasCtrl = schemas;
         this.shapeChecked = true;
         return this;
@@ -50,7 +50,7 @@ public final class MapSchema extends BaseSchema {
     }
 
     @Override
-    public Schema sizeof(int size) {
+    public BaseSchema sizeof(int size) {
         super.getState().setSize(size);
         super.getState().setSizeChecked(true);
         return this;

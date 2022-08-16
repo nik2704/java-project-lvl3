@@ -31,14 +31,14 @@ public final class StringSchema extends BaseSchema {
     }
 
     @Override
-    public Schema contains(String value) {
+    public BaseSchema contains(String value) {
         super.getState().setContainedStr(value);
         super.getState().setStrContainsChecked(true);
         return this;
     }
 
     @Override
-    public Schema minLength(int mLength) {
+    public BaseSchema minLength(int mLength) {
         super.getState().setMinLength(mLength);
         super.getState().setMinLengthChecked(true);
         return this;

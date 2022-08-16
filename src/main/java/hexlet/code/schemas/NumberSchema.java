@@ -34,7 +34,7 @@ public final class NumberSchema extends BaseSchema {
     }
 
     @Override
-    public Schema range(int start, int end) {
+    public BaseSchema range(int start, int end) {
         super.getState().setMinValue(start);
         super.getState().setMaxValue(end);
         super.getState().setRangeChecked(true);
