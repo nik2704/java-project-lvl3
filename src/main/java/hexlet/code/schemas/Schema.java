@@ -7,8 +7,8 @@ import java.util.Map;
 
 public interface Schema {
     boolean isValid(Object value);
-    default Schema contains(String value) {
-        return this;
+    default BaseSchema contains(String value) {
+        return (BaseSchema) this;
     }
     Schema required();
     Schema notRequired();

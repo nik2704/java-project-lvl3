@@ -44,7 +44,8 @@ public class MapSchemaTest {
         MapSchema schema = v.map();
 
         Map<String, BaseSchema> schemas = new HashMap<>();
-        schemas.put("name", v.string().required());
+//        schemas.put("name", v.string().required());
+        schemas.put("name", v.string().required().contains("ya"));
         schemas.put("age", v.number().positive());
         schema.shape(schemas);
 
