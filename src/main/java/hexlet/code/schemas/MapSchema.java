@@ -4,11 +4,11 @@ import java.util.Map;
 import java.util.Objects;
 
 public final class MapSchema extends BaseSchema {
-    private Map<String, Schema> schemasCtrl;
+    private Map<String, BaseSchema> schemasCtrl;
     private boolean shapeChecked = false;
 
     @Override
-    public Schema shape(Map<String, Schema> schemas) {
+    public Schema shape(Map<String, BaseSchema> schemas) {
         this.schemasCtrl = schemas;
         this.shapeChecked = true;
         return this;
@@ -33,7 +33,7 @@ public final class MapSchema extends BaseSchema {
                 return false;
             }
 
-            for (Map.Entry<String, Schema> shape : this.schemasCtrl.entrySet()) {
+            for (Map.Entry<String, BaseSchema> shape : this.schemasCtrl.entrySet()) {
                 Object valueForChecking = ((Map) value).get(shape.getKey());
 
                 if (!((Map) value).containsKey(shape.getKey())) {

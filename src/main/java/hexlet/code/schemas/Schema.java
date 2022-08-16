@@ -22,7 +22,7 @@ public interface Schema {
         return this;
     }
 
-    default Schema shape(Map<String, Schema> schemas) {
+    default Schema shape(Map<String, BaseSchema> schemas) {
         return this;
     }
     default Schema sizeof(int size) {

@@ -28,7 +28,7 @@ public final class NumberSchema extends BaseSchema {
     }
 
     @Override
-    public Schema positive() {
+    public BaseSchema positive() {
         super.getState().setPositiveChecked(true);
         return this;
     }
