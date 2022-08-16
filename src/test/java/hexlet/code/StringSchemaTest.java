@@ -12,24 +12,23 @@ public final class StringSchemaTest {
 
     @ParameterizedTest
     @CsvSource(value = {
-            "stroka, default, 0, true",
-            "BLANC, default, 0, true",
-            "NULL, default, 0, true",
-            "stroka, REQUIRED, 0, true",
-            "BLANC, REQUIRED, 0, false",
-            "NULL, REQUIRED, 0, false",
-            "stroka, MIN, 6, true",
-            "stroka, MIN, 5, true",
-            "stroka, MIN, 7, false",
-            "WHITESPACE, REQUIRED, 0, true",
-            "WHITESPACE, MIN, 1, true",
-            "WHITESPACE, MIN, 0, true",
-            "stroka, CONTAINS, 5, true",
-            "STROKA, CONTAINS, 5, false",
-            "BLANC, CONTAINS, 5, false",
-            "stroka, CONTAINS+MIN, 5, true",
-            "ooko, CONTAINS+MIN, 5, false"
-
+        "stroka, default, 0, true",
+        "BLANC, default, 0, true",
+        "NULL, default, 0, true",
+        "stroka, REQUIRED, 0, true",
+        "BLANC, REQUIRED, 0, false",
+        "NULL, REQUIRED, 0, false",
+        "stroka, MIN, 6, true",
+        "stroka, MIN, 5, true",
+        "stroka, MIN, 7, false",
+        "WHITESPACE, REQUIRED, 0, true",
+        "WHITESPACE, MIN, 1, true",
+        "WHITESPACE, MIN, 0, true",
+        "stroka, CONTAINS, 5, true",
+        "STROKA, CONTAINS, 5, false",
+        "BLANC, CONTAINS, 5, false",
+        "stroka, CONTAINS+MIN, 5, true",
+        "ooko, CONTAINS+MIN, 5, false"
         }, ignoreLeadingAndTrailingWhitespace = true)
     public void testValue(String value, String mode, int minLength, boolean expected) {
         Validator v = new Validator();
