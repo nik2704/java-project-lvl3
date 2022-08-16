@@ -4,17 +4,49 @@ import java.util.Map;
 import java.util.Objects;
 
 public final class MapSchema extends BaseSchema {
+    private Map<String, Schema> schemasCtrl;
+    private boolean shapeChecked = false;
+
+    @Override
+    public Schema shape(Map<String, Schema> schemas) {
+        this.schemasCtrl = schemas;
+        this.shapeChecked = true;
+        return this;
+    }
+
     @Override
     public boolean isValid(Object value) {
-        boolean result = super.checkRequiredValidity(value, null);
+        if (!super.checkRequiredValidity(value, null)) {
+            return false;
+        }
 
         if (!Objects.isNull(value)) {
             if (super.getState().isSizeChecked()) {
-                result = ((Map) value).size() == super.getState().getSize();
+                if (!(((Map) value).size() == super.getState().getSize())) {
+                    return false;
+                }
             }
         }
 
-        return result;
+        if (this.shapeChecked) {
+            if (this.schemasCtrl.size() != ((Map) value).size()) {
+                return false;
+            }
+
+            for (Map.Entry<String, Schema> shape : this.schemasCtrl.entrySet()) {
+                Object valueForChecking = ((Map) value).get(shape.getKey());
+
+                if (!((Map) value).containsKey(shape.getKey())) {
+                    return false;
+                }
+
+                if (!shape.getValue().isValid(valueForChecking)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     @Override

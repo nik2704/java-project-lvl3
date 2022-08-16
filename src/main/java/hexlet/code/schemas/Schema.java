@@ -2,6 +2,8 @@ package hexlet.code.schemas;
 
 import hexlet.code.schemas.states.State;
 
+import java.util.Map;
+
 
 public interface Schema {
     boolean isValid(Object value);
@@ -20,6 +22,9 @@ public interface Schema {
         return this;
     }
 
+    default Schema shape(Map<String, Schema> schemas) {
+        return this;
+    }
     default Schema sizeof(int size) {
         return  this;
     }
