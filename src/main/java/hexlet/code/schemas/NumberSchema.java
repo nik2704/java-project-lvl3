@@ -12,7 +12,7 @@ public final class NumberSchema extends BaseSchema {
             int intValue = Integer.parseInt(Objects.toString(value));
 
             if (super.getState().isPositiveChecked()) {
-                if (intValue < 0) {
+                if (intValue <= 0) {
                     return false;
                 }
             }
