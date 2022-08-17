@@ -1,28 +1,25 @@
 package hexlet.code.schemas;
 
 
-import lombok.Getter;
-import lombok.Setter;
-
-import java.util.Objects;
+import java.util.ArrayList;
 import java.util.function.Predicate;
 
 
 public abstract class BaseSchema {
-    @Getter
-    @Setter
-    private boolean required = false;
+    private ArrayList<Predicate> predicates;
 
-    public abstract boolean isValid(Object value);
+    public BaseSchema() {
+        predicates = new ArrayList<>();
+    }
 
-    public final boolean checkRequiredValidity(Object value, Predicate p) {
-        if (this.required) {
-            if (Objects.isNull(value)) {
+    public final void addPredicate(Predicate p) {
+        predicates.add(p);
+    }
+
+    public final boolean isValid(Object value) {
+        for (Predicate p : predicates) {
+            if (!p.test(value)) {
                 return false;
-            }
-
-            if (p != null) {
-                return p.test(value);
             }
         }
 
