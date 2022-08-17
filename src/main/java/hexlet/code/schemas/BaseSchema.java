@@ -1,24 +1,22 @@
 package hexlet.code.schemas;
 
-import hexlet.code.schemas.states.State;
+
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Objects;
 import java.util.function.Predicate;
 
 
-public abstract class BaseSchema implements Schema {
-
-    public BaseSchema() {
-        this.state = new State(this);
-    }
+public abstract class BaseSchema {
     @Getter
-    private State state;
-    @Override
+    @Setter
+    private boolean required = false;
+
     public abstract boolean isValid(Object value);
 
     public final boolean checkRequiredValidity(Object value, Predicate p) {
-        if (this.state.isRequired()) {
+        if (this.required) {
             if (Objects.isNull(value)) {
                 return false;
             }
@@ -31,20 +29,5 @@ public abstract class BaseSchema implements Schema {
         return true;
     }
 
-    @Override
-    public final BaseSchema required() {
-        this.state.setRequired(true);
-        return this;
-    }
-
-    @Override
-    public final BaseSchema notRequired() {
-        this.state.setRequired(false);
-        return this;
-    }
-
-    @Override
-    public final void setState(State schemaState) {
-        this.state = schemaState;
-    }
+    public abstract BaseSchema required();
 }

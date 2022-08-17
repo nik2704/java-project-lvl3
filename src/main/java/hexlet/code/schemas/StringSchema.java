@@ -1,5 +1,7 @@
 package hexlet.code.schemas;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.util.Objects;
@@ -7,6 +9,21 @@ import java.util.Objects;
 
 @ToString
 public final class StringSchema extends BaseSchema {
+    @Getter
+    @Setter
+    private int minLength = 0;
+
+    @Getter
+    @Setter
+    private String containedStr;
+
+    @Getter
+    @Setter
+    private boolean minLengthChecked = false;
+
+    @Getter
+    @Setter
+    private boolean strContainsChecked = false;
 
     @Override
     public boolean isValid(Object value) {
@@ -15,14 +32,14 @@ public final class StringSchema extends BaseSchema {
 
         String strValue = value != null ? Objects.toString(value) : "";
 
-        if (super.getState().isMinLengthChecked()) {
-            if (strValue.length() < super.getState().getMinLength()) {
+        if (this.isMinLengthChecked()) {
+            if (strValue.length() < this.getMinLength()) {
                 return false;
             }
         }
 
-        if (super.getState().isStrContainsChecked()) {
-            if (!strValue.contains(super.getState().getContainedStr())) {
+        if (this.isStrContainsChecked()) {
+            if (!strValue.contains(this.getContainedStr())) {
                 return false;
             }
         }
@@ -31,16 +48,20 @@ public final class StringSchema extends BaseSchema {
     }
 
     @Override
-    public BaseSchema contains(String value) {
-        super.getState().setContainedStr(value);
-        super.getState().setStrContainsChecked(true);
+    public StringSchema required() {
+        super.setRequired(true);
         return this;
     }
 
-    @Override
-    public BaseSchema minLength(int mLength) {
-        super.getState().setMinLength(mLength);
-        super.getState().setMinLengthChecked(true);
+    public StringSchema contains(String value) {
+        this.setContainedStr(value);
+        this.setStrContainsChecked(true);
+        return this;
+    }
+
+    public StringSchema minLength(int mLength) {
+        this.setMinLength(mLength);
+        this.setMinLengthChecked(true);
         return this;
     }
 

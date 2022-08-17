@@ -1,9 +1,28 @@
 package hexlet.code.schemas;
 
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Objects;
 
 public final class NumberSchema extends BaseSchema {
+    @Getter
+    @Setter
+    private boolean positiveChecked = false;
+
+    @Getter
+    @Setter
+    private boolean rangeChecked = false;
+
+    @Getter
+    @Setter
+    private int minValue = 0;
+
+    @Getter
+    @Setter
+    private int maxValue = 0;
+
     @Override
     public boolean isValid(Object value) {
         boolean result = super.checkRequiredValidity(value, obj -> obj instanceof Integer);
@@ -11,14 +30,14 @@ public final class NumberSchema extends BaseSchema {
         if (!Objects.isNull(value)) {
             int intValue = Integer.parseInt(Objects.toString(value));
 
-            if (super.getState().isPositiveChecked()) {
+            if (this.isPositiveChecked()) {
                 if (intValue <= 0) {
                     return false;
                 }
             }
 
-            if (super.getState().isRangeChecked()) {
-                if (!((intValue >= super.getState().getMinValue()) && (intValue <= super.getState().getMaxValue()))) {
+            if (this.isRangeChecked()) {
+                if (!((intValue >= this.getMinValue()) && (intValue <= this.getMaxValue()))) {
                     return false;
                 }
             }
@@ -28,16 +47,19 @@ public final class NumberSchema extends BaseSchema {
     }
 
     @Override
-    public BaseSchema positive() {
-        super.getState().setPositiveChecked(true);
+    public NumberSchema required() {
+        super.setRequired(true);
+        return this;
+    }
+    public NumberSchema positive() {
+        this.setPositiveChecked(true);
         return this;
     }
 
-    @Override
-    public BaseSchema range(int start, int end) {
-        super.getState().setMinValue(start);
-        super.getState().setMaxValue(end);
-        super.getState().setRangeChecked(true);
+    public NumberSchema range(int start, int end) {
+        this.setMinValue(start);
+        this.setMaxValue(end);
+        this.setRangeChecked(true);
         return this;
     }
 

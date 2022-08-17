@@ -1,14 +1,24 @@
 package hexlet.code.schemas;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Map;
 import java.util.Objects;
 
 public final class MapSchema extends BaseSchema {
+
+    @Getter
+    @Setter
+    private int size = 0;
+
+    @Getter
+    @Setter
+    private boolean sizeChecked = false;
     private Map<String, BaseSchema> schemasCtrl;
     private boolean shapeChecked = false;
 
-    @Override
-    public BaseSchema shape(Map<String, BaseSchema> schemas) {
+    public MapSchema shape(Map<String, BaseSchema> schemas) {
         this.schemasCtrl = schemas;
         this.shapeChecked = true;
         return this;
@@ -21,8 +31,8 @@ public final class MapSchema extends BaseSchema {
         }
 
         if (!Objects.isNull(value)) {
-            if (super.getState().isSizeChecked()) {
-                if (!(((Map) value).size() == super.getState().getSize())) {
+            if (this.isSizeChecked()) {
+                if (!(((Map) value).size() == this.getSize())) {
                     return false;
                 }
             }
@@ -50,9 +60,13 @@ public final class MapSchema extends BaseSchema {
     }
 
     @Override
-    public BaseSchema sizeof(int size) {
-        super.getState().setSize(size);
-        super.getState().setSizeChecked(true);
+    public MapSchema required() {
+        super.setRequired(true);
+        return this;
+    }
+    public MapSchema sizeof(int mapSize) {
+        this.setSize(mapSize);
+        this.setSizeChecked(true);
         return this;
     }
 }
