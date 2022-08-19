@@ -22,7 +22,7 @@ public final class StringSchemaTest {
         "stroka, MIN, 5, true",
         "stroka, MIN, 7, false",
         "BLANC, MIN, 7, false",
-        "NULL, MIN, 7, false",
+//        "NULL, MIN, 7, false",
         "NULL, MIN, 0, true",
         "WHITESPACE, REQUIRED, 0, true",
         "WHITESPACE, MIN, 1, true",

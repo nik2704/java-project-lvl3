@@ -1,12 +1,18 @@
 package hexlet.code.schemas;
 
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
 
 public abstract class BaseSchema {
+
+    @Getter
+    private boolean required = false;
+
     private List<Predicate> predicates;
 
     public BaseSchema() {
@@ -17,7 +23,12 @@ public abstract class BaseSchema {
         predicates.add(p);
     }
 
-    public final boolean isValid(Object value) {
+    /**
+     * The base method of checking of required conditions.
+     * @param       value is being tested
+     * @return      true or false
+     */
+    public boolean isValid(Object value) {
         for (Predicate p : predicates) {
             if (!p.test(value)) {
                 return false;
@@ -32,6 +43,7 @@ public abstract class BaseSchema {
      * @return      the object itself
      */
     public BaseSchema required() {
+        this.required = true;
         addPredicate(v -> v != null);
         return this;
     }
