@@ -24,6 +24,7 @@ public final class MapSchema extends BaseSchema {
 
     @Override
     public BaseSchema required() {
+        super.required();
         super.addPredicate(v -> !Objects.isNull(v));
         super.addPredicate(v -> v instanceof Map);
         return this;

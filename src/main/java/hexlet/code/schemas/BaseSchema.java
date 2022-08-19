@@ -2,11 +2,12 @@ package hexlet.code.schemas;
 
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
 
 
 public abstract class BaseSchema {
-    private ArrayList<Predicate> predicates;
+    private List<Predicate> predicates;
 
     public BaseSchema() {
         predicates = new ArrayList<>();
@@ -26,5 +27,12 @@ public abstract class BaseSchema {
         return true;
     }
 
-    public abstract BaseSchema required();
+    /**
+     * The base method for adding predicates for future checking of required conditions.
+     * @return      the object itself
+     */
+    public BaseSchema required() {
+        addPredicate(v -> v != null);
+        return this;
+    }
 }

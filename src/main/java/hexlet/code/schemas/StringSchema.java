@@ -9,6 +9,7 @@ import java.util.Objects;
 public final class StringSchema extends BaseSchema {
     @Override
     public StringSchema required() {
+        super.required();
         super.addPredicate(v -> !Objects.isNull(v));
         super.addPredicate(v -> v instanceof String);
         super.addPredicate(v -> !Objects.toString(v).isEmpty());
@@ -16,7 +17,7 @@ public final class StringSchema extends BaseSchema {
     }
 
     public StringSchema contains(String value) {
-        super.addPredicate(v -> v != null ? Objects.toString(v).contains(value) : value == null);
+        super.addPredicate(v -> Objects.toString(v).contains(value));
         return this;
     }
 
