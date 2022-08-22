@@ -22,7 +22,6 @@ public class NumberSchemaTest {
         assertThat(schema.isValid(null)).isEqualTo(true);
         assertThat(schema.isValid("10")).isEqualTo(true);
         assertThat(schema.isValid("ABC")).isEqualTo(true);
-//        assertThat(schema.range(10, 20).isValid("ABC")).isEqualTo(true);
         assertThat(schema.isValid(new NumberSchema())).isEqualTo(true);
 
         schema.required();

@@ -2,39 +2,32 @@ package hexlet.code.schemas;
 
 
 import lombok.ToString;
-import java.util.Objects;
+
 
 
 @ToString
-public final class StringSchema extends BaseSchema {
+public final class StringSchema extends BaseSchema<String> {
+
     @Override
     public StringSchema required() {
         super.required();
-        addPredicate(v -> !Objects.toString(v).isEmpty());
+        addPredicate(v -> !v.isEmpty());
         return this;
     }
 
     public StringSchema contains(String value) {
-        addPredicate(v -> Objects.toString(v).contains(value));
+        addPredicate(v -> v.contains(value));
         return this;
     }
 
     public StringSchema minLength(int mLength) {
-        addPredicate(v -> v != null ? Objects.toString(v).length() >= mLength : mLength == 0);
+        addPredicate(v -> v.length() >= mLength);
         return this;
     }
 
     @Override
-    public boolean isValid(Object value) {
-        if (value instanceof String) {
-            return super.isValid(value);
-        }
-
-        if (isRequired()) {
-            return false;
-        }
-
-        return true;
+    public boolean checkInstanceOfRequiredClass(Object value) {
+        return value instanceof String;
     }
 
 }
