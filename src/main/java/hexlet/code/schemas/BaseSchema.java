@@ -24,10 +24,10 @@ public abstract class BaseSchema<T> {
     }
 
     private void putCondition(Predicate<T> p, String capture) {
-        if (!conditions.containsKey(captionCondition)) {
-            conditions.put(captionCondition, new ArrayList<Predicate<T>>());
+        if (!conditions.containsKey(capture)) {
+            conditions.put(capture, new ArrayList<Predicate<T>>());
         }
-        conditions.get(captionCondition).add(p);
+        conditions.get(capture).add(p);
     }
     public final void addPredicate(Predicate<T> p, String capture) {
         putCondition(p, capture);
