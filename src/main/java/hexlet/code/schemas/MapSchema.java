@@ -23,10 +23,8 @@ public final class MapSchema extends BaseSchema<Map> {
     }
 
     @Override
-    public BaseSchema required() {
-        super.required();
-        addPredicate(v -> !Objects.isNull(v));
-        return this;
+    public MapSchema required() {
+        return (MapSchema) setRequiredCondition(v -> !Objects.isNull(v));
     }
 
     @Override

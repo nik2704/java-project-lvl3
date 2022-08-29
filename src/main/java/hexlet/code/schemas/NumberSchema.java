@@ -16,10 +16,8 @@ public final class NumberSchema extends BaseSchema<Integer> {
     }
 
     @Override
-    public BaseSchema required() {
-        super.required();
-        addPredicate(v -> !Objects.isNull(v));
-        return this;
+    public NumberSchema required() {
+        return (NumberSchema) setRequiredCondition(v -> !Objects.isNull(v));
     }
 
     @Override

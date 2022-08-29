@@ -10,9 +10,7 @@ public final class StringSchema extends BaseSchema<String> {
 
     @Override
     public StringSchema required() {
-        super.required();
-        addPredicate(v -> !v.isEmpty());
-        return this;
+        return (StringSchema) setRequiredCondition(v -> !v.isEmpty());
     }
 
     public StringSchema contains(String value) {

@@ -3,76 +3,61 @@ package hexlet.code.schemas;
 
 import lombok.Getter;
 
-import java.util.Map;
-import java.util.HashMap;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
 
 
 public abstract class BaseSchema<T> {
-    private static String captionRequired = "required";
-    private static String captionCondition = "condition";
-
     @Getter
     private boolean required = false;
 
-    private Map<String, List<Predicate<T>>> conditions;
+    private Predicate<T> requiredCondition;
 
-    public BaseSchema() {
-        conditions = new HashMap<>();
-    }
+    private List<Predicate<T>> conditions = new ArrayList<>();
 
-    private void putCondition(Predicate<T> p, String capture) {
-        if (!conditions.containsKey(capture)) {
-            conditions.put(capture, new ArrayList<Predicate<T>>());
-        }
-        conditions.get(capture).add(p);
-    }
-    public final void addPredicate(Predicate<T> p, String capture) {
-        putCondition(p, capture);
-    }
     public final void addPredicate(Predicate<T> p) {
-        putCondition(p, captionCondition);
+        conditions.add(p);
     }
 
     public abstract boolean checkInstanceOfRequiredClass(Object value);
 
     public final boolean isValid(Object value) {
         if (isRequired()) {
+            if (value == null) {
+                return false;
+            }
+
             if (!checkInstanceOfRequiredClass(value)) {
                 return false;
             }
-            if (!areConditionsMet(value, captionRequired)) {
+
+            if (!requiredCondition.test((T) value)) {
                 return false;
             }
         }
         if (checkInstanceOfRequiredClass(value)) {
-            return areConditionsMet(value, captionCondition);
+            return areConditionsMet(value);
         }
 
         return true;
     }
 
-    private boolean areConditionsMet(Object value, String caption) {
-        if (conditions.containsKey(caption)) {
-            for (Predicate p : conditions.get(caption)) {
-                if (!p.test(value)) {
-                    return false;
-                }
+    private boolean areConditionsMet(Object value) {
+        for (Predicate p : conditions) {
+            if (!p.test(value)) {
+                return false;
             }
         }
-
         return true;
     }
 
-    /**
-     * The base method for adding predicates for future checking of required conditions.
-     * @return      the object itself
-     */
-    public BaseSchema required() {
+    public abstract BaseSchema required(); // {
+
+    public final BaseSchema setRequiredCondition(Predicate<T> p) {
         this.required = true;
-        addPredicate(v -> v != null, captionRequired);
+        requiredCondition = p;
+
         return this;
     }
 }
