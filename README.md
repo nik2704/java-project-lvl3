@@ -33,6 +33,7 @@
 
 1) **Валидация строк**
 
+```java
 
     import hexlet.code.Validator;
     import hexlet.code.schemas.StringSchema;
@@ -56,10 +57,10 @@
     schema.isValid("what does the fox say"); // false
     // уже false, так как добавлена ещё одна проверка contains("whatthe")
 
-
+```
 2) **Валидация ассоциативного массива**
 
-
+```java
     import hexlet.code.Validator;
     import hexlet.code.schemas.MapSchema;
     
@@ -82,3 +83,4 @@
     schema.isValid(data);  // false
     data.put("key2", "value2");
     schema.isValid(data); // true
+```
